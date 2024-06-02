@@ -1,0 +1,39 @@
+.container-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.content_form {
+  height: 100vh;
+}
+.content_form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  padding: 25px;
+}
+.content_form form input {
+  width: 25%;
+  padding: 5px 10px;
+  outline: none;
+}
+
+.content_form form input:focus {
+  border: 2px solid var(--primary);
+}
+.content_form form button {
+  width: 25%;
+  padding: 5px 10px;
+  background-color: var(--primary);
+  border: none;
+  outline: none;
+  color: white;
+}
+
+.button_login {
+  background-color: antiquewhite;
+  color: black;
+}

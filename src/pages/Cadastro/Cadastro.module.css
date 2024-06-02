@@ -1,0 +1,13 @@
+.container_cadastro {
+  height: 100vh;
+  background-color: var(--primary);
+}
+
+.container_form_cadastro {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+}
