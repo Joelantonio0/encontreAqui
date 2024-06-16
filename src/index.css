@@ -1,0 +1,32 @@
+:root {
+  font-family: "Fira code", monospace;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --primary: #00a6ff;
+  --secondary: #20cfd9;
+  --lightgreen: #a7e873;
+  --fourth: #f6eea0;
+  --fifth: #f8eded;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.p-menubar-button{
+  height: 60px !important;
+}
+.p-menubar{
+  height: 60px !important;
+
+}
+.p-menuitem-icon {
+  margin: 10px  !important;
+  margin-left: 30px !important;
+  
+}
+.p-menuitem-link{
+  margin-left: 70px !important;
+}

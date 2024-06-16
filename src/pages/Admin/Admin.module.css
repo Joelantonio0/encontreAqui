@@ -1,0 +1,60 @@
+.contentAdmin {
+  display: flex;
+}
+
+.leftSide {
+  width: 20%;
+}
+
+.rightSide {
+  width: 80%;
+  padding: 20px;
+  height: 100vh;
+}
+
+.navbar {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+}
+
+.navItem {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.navItem:hover {
+  background-color: #e0e0e0;
+}
+
+.dropdownContent {
+  display: none;
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
+.dashboardCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  width: calc(33.333% - 20px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  margin-top: 0;
+}
