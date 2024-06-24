@@ -7,6 +7,7 @@ import Dashboard from "../../components/AdminComponents/dashboard";
 import GestaoItens from "../../components/AdminComponents/GestaoItens";
 import GestaoUsuarios from "../../components/AdminComponents/GestaoUsuarios";
 import Relatorios from "../../components/AdminComponents/Relatorios";
+import Categorias from "../../components/AdminComponents/Categorias";
 function Admin() {
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("dashboard");
@@ -27,6 +28,12 @@ function Admin() {
         return (
           <>
             <GestaoItens />
+          </>
+        );
+      case "categorias":
+        return (
+          <>
+            <Categorias />
           </>
         );
       case "found-items":
@@ -102,6 +109,12 @@ function Admin() {
                 onClick={() => handleNavigation("lost-items")}
               >
                 <i className="pi pi-fw pi-list"></i> Gestão de Itens
+              </li>
+              <li
+                className={styles.navItem}
+                onClick={() => handleNavigation("categorias")}
+              >
+                <i className="pi pi-fw pi-list"></i> Categorias
               </li>
               <li
                 className={styles.navItem}

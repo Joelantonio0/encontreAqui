@@ -14,7 +14,7 @@ import $ from 'jquery';
 
 const schema = yup.object().shape({
   email: yup.string().email('Email inválido').required('Email é obrigatório'),
-  password: yup.string().required('Senha é obrigatória')
+  senha: yup.string().required('Senha é obrigatória')
 });
 
 const Login = () => {
@@ -35,6 +35,7 @@ const Login = () => {
       contentType: 'application/json',
       data: JSON.stringify(data),
       success: (response) => {
+        localStorage.setItem('sessionData', JSON.stringify(data));
         show("Usuário Logado com sucesso", "success");
         setTimeout(() => {
           window.location.href = '/home'; 
@@ -48,9 +49,9 @@ const Login = () => {
     });
   };
 
-  const handlePasswordChange = (e) => {
-    setValue('password', e.target.value);
-    console.log('Password field updated:', e.target.value);
+  const handleSenhaChange = (e) => {
+    setValue('senha', e.target.value);
+    console.log('Senha field updated:', e.target.value);
   };
 
   return (
@@ -66,9 +67,9 @@ const Login = () => {
               {errors.email && <small className="p-error">{errors.email.message}</small>}
             </div>
             <div className="p-field p-mb-3" style={{ paddingLeft: '5px' }}>
-              <label htmlFor="password" style={{ marginLeft: '5px' }}>Senha</label>
-              <Password id="password" {...register('password')} onChange={handlePasswordChange} feedback={false} className={errors.password ? 'p-invalid' : ''} inputStyle={{ width: '100%', borderRadius: '5px', border: '1px solid #ced4da', boxShadow: 'none' }} />
-              {errors.password && <small className="p-error">{errors.password.message}</small>}
+              <label htmlFor="senha" style={{ marginLeft: '5px' }}>Senha</label>
+              <Password id="senha" {...register('senha')} onChange={handleSenhaChange} feedback={false} className={errors.senha ? 'p-invalid' : ''} inputStyle={{ width: '100%', borderRadius: '5px', border: '1px solid #ced4da', boxShadow: 'none' }} />
+              {errors.senha && <small className="p-error">{errors.senha.message}</small>}
             </div>
             <div className="p-d-flex p-jc-center" style={{ marginBottom: '1rem', textAlign: 'center', marginTop: '15px' }}>
               <Button type="submit" label="Login" className="p-button-rounded p-button-primary" style={{ width: '100px' }} />
