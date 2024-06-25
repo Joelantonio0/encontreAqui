@@ -1,16 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./AdminComponents.module.css";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
+import { Toast } from "primereact/toast";
 function Categorias() {
+  const toast = useRef(null);
   const [categorias, setCategorias] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
+  const [categoriaID, setCategoriaID] = useState();
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
-  useEffect(() => {
+  const show = (mensagem, estado) => {
+    toast.current.show({ severity: estado, detail: mensagem, life: 3000 });
+  };
+  const handleListarCategorias = () => {
     fetch("http://localhost:5000/listar_categorias")
       .then((response) => {
         if (!response.ok) {
@@ -25,6 +32,9 @@ function Categorias() {
       .catch((error) => {
         console.error("Erro ao buscar a lista de categorias:", error);
       });
+  };
+  useEffect(() => {
+    handleListarCategorias();
   }, []);
   const handleCadastrarCategoria = (e) => {
     e.preventDefault();
@@ -40,11 +50,15 @@ function Categorias() {
       .then((response) => response.json)
       .then((data) => {
         console.log(data);
+        show("Cadastro efectuado com sucesso", "success");
         setNome("");
         setDescricao("");
+        setTimeout(() => {}, 3000);
+        handleListarCategorias();
       })
       .catch((error) => {
         console.log(error);
+        show("Cadastro não efectuado com sucesso", "error");
       });
     setVisible(false);
   };
@@ -59,13 +73,24 @@ function Categorias() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        show("Eliminação efectuada com sucesso", "success");
+        setTimeout(() => {}, 3000);
+        handleListarCategorias();
       })
       .catch((error) => {
         console.log(error);
+        show("Eliminação não efectuada com sucesso", "error");
       });
+    setVisible2(false);
+  };
+  const handleMostrarOpcao = (pk_categoria) => {
+    setCategoriaID(pk_categoria);
+    setVisible2(true);
+    console.log(categoriaID);
   };
   return (
     <>
+      <Toast ref={toast} />
       <div className={styles.container_categorias}>
         <h1 style={{ textAlign: "center" }}>Lista de categorias</h1>
         <div className={styles.botoes_operacao}>
@@ -127,7 +152,7 @@ function Categorias() {
                   icon="pi pi-trash"
                   className="p-button p-button-danger"
                   onClick={() => {
-                    handleEliminarCategoria(rowData.pk_categoria);
+                    handleMostrarOpcao(rowData.pk_categoria);
                   }}
                 />
               )}
@@ -176,6 +201,38 @@ function Categorias() {
             />
           </div>
         </form>
+      </Dialog>
+      <Dialog
+        header="Confirmar eliminação"
+        visible={visible2}
+        style={{ width: "30vw", height: "30vh" }}
+        onHide={() => {
+          if (!visible2) return;
+          setVisible2(false);
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            gap: "5px",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "50px",
+          }}
+        >
+          <Button
+            label="Confirmar"
+            className="p-button-danger"
+            style={{ padding: "10px" }}
+            onClick={() => handleEliminarCategoria(categoriaID)}
+          />
+          <Button
+            label="Cancelar"
+            style={{ padding: "10px" }}
+            onClick={() => setVisible2(false)}
+          />
+        </div>
       </Dialog>
     </>
   );
