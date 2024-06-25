@@ -22,5 +22,17 @@
 }
 
 .tabela_categorias {
-  margin-top: 20px;
+  margin-top: 5px;
+}
+.botoes_operacao {
+  display: flex;
+  gap: 7px;
+  justify-content: end;
+}
+.form_nova_categoria {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 40px;
+  gap: 5px;
 }
