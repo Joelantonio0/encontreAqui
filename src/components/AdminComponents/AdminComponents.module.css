@@ -16,6 +16,7 @@
 .card h2 {
   margin-top: 0;
 }
+/*CATEGORIAS*/
 
 .container_categorias {
   padding: 15px;
@@ -36,3 +37,14 @@
   padding: 5px 40px;
   gap: 5px;
 }
+/*FIM CATEGORIAS*/
+
+/*GESTÃO DE USUÁRIOS*/
+.container_gestao_usuarios {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+/*FIM GESTÃO DE USUÁRIOS*/
