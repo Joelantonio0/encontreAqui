@@ -43,9 +43,7 @@ const Login = () => {
         console.log(data);
         localStorage.setItem("sessionData", JSON.stringify(data));
         show("Usuário Logado com sucesso", "success");
-        setTimeout(() => {
-          window.location.href = "/home";
-        }, 3000);
+        window.location.href = "/home";
       },
       error: (xhr, status, error) => {
         console.log(data);

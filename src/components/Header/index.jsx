@@ -12,12 +12,19 @@ const Menu = () => {
   return (
     <nav className={styles.navbar}>
       <ul className={styles.navList}>
-        <li className={styles.navItem} style={{ marginRight: "140px" }}>
+        <li
+          className={styles.navItem}
+          style={{ marginRight: "140px" }}
+          onClick={() => handleNavigation("/home")}
+        >
           <h1>
             Encontre<span>Aqui</span>
           </h1>
         </li>
-        <li className={styles.navItem} onClick={() => handleNavigation("/")}>
+        <li
+          className={styles.navItem}
+          onClick={() => handleNavigation("/home")}
+        >
           <i className="pi pi-fw pi-home"></i> Home
         </li>
         <li
@@ -53,14 +60,11 @@ const Menu = () => {
         </li>
         <li
           className={styles.navItem}
-          onClick={() => handleNavigation("/profile")}
+          onClick={() => handleNavigation("/admin")}
         >
           <i className="pi pi-fw pi-user"></i> Perfil
         </li>
-        <li
-          className={styles.navItem}
-          onClick={() => handleNavigation("/login")}
-        >
+        <li className={styles.navItem} onClick={() => handleNavigation("/")}>
           <i className="pi pi-fw pi-power-off"></i> Sair
         </li>
       </ul>

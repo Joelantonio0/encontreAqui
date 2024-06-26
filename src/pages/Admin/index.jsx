@@ -134,12 +134,6 @@ function Admin() {
               >
                 <i className="pi pi-fw pi-user"></i> Perfil
               </li>
-              <li
-                className={styles.navItem}
-                onClick={() => handleNavigation("login")}
-              >
-                <i className="pi pi-fw pi-power-off"></i> Sair
-              </li>
             </ul>
           </nav>
         </div>

@@ -15,7 +15,14 @@ function GestaoUsuarios() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setUsuarios(data.dados);
+        if (Array.isArray(data.dados) && data.dados.length > 0) {
+          setUsuarios(data.dados);
+        } else {
+          console.error(
+            "Os dados recebidos são um array vazio ou não é um array:",
+            data.dados
+          );
+        }
       })
       .catch((error) => {
         console.log(error);

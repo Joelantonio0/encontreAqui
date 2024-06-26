@@ -27,7 +27,14 @@ function Categorias() {
       })
       .then((data) => {
         console.log(data.dados);
-        setCategorias(data.dados);
+        if (Array.isArray(data.dados) && data.dados.length > 0) {
+          setCategorias(data.dados);
+        } else {
+          console.error(
+            "Os dados recebidos são um array vazio ou não é um array:",
+            data.dados
+          );
+        }
       })
       .catch((error) => {
         console.error("Erro ao buscar a lista de categorias:", error);
