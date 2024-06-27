@@ -12,6 +12,8 @@ import "primeflex/primeflex.css";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import Header from "../../components/Header/index";
+import Footer from "../../components/Footer/index";
 import $ from "jquery";
 
 // Validation schema
@@ -31,7 +33,8 @@ const Item = () => {
   const toast = useRef(null);
   const [categorias, setCategorias] = useState([]);
   const [estados, setEstados] = useState([]);
-
+  const [valorCategoria, setValorCategoria] = useState([]);
+  const [valorEstado, setValorEstado] = useState([]);
   const show = (mensagem, estado) => {
     toast.current.show({ severity: estado, detail: mensagem, life: 3000 });
   };
@@ -45,38 +48,31 @@ const Item = () => {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const categoriesResponse = await $.ajax({
-          url: "http://localhost:5000/pegar_categorias",
-          method: "GET",
-          dataType: "json",
-        });
-        setCategorias(
-          categoriesResponse.map((category) => ({
-            label: category.nome,
-            value: category.pk_categoria,
-          }))
-        );
-
-        const statesResponse = await $.ajax({
-          url: "http://localhost:5000/pegar_estados",
-          method: "GET",
-          dataType: "json",
-        });
-        setEstados(
-          statesResponse.map((state) => ({
-            label: state.descricao,
-            value: state.pk_estado,
-          }))
-        );
-      } catch (error) {
-        console.error("Erro ao buscar categorias ou estados:", error);
-        show("Erro ao carregar dados", "error");
-      }
-    };
-
-    fetchData();
+    fetch("http://localhost:5000/listar_categorias")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao buscar a lista de categorias");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data.dados);
+        if (Array.isArray(data.dados) && data.dados.length > 0) {
+          const formattedCategorias = data.dados.map((categoria) => ({
+            label: categoria.nome,
+            value: categoria.id,
+          }));
+          setCategorias(formattedCategorias);
+        } else {
+          console.error(
+            "Os dados recebidos são um array vazio ou não é um array:",
+            data.dados
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar a lista de categorias:", error);
+      });
   }, []);
 
   const onSubmit = async (data) => {
@@ -108,6 +104,7 @@ const Item = () => {
 
   return (
     <>
+      <Header />
       <Toast ref={toast} />
       <div
         className="p-d-flex p-jc-center p-ai-center p-mt-6"
@@ -129,12 +126,12 @@ const Item = () => {
           }}
         >
           <h2 className="p-text-center" style={{ textAlign: "center" }}>
-            Recuperar Item
+            Reportar Item
           </h2>
           <form onSubmit={handleSubmit(onSubmit)} className="p-fluid">
             <div className="p-field p-mb-3" style={{ paddingLeft: "5px" }}>
               <label htmlFor="nome" style={{ marginLeft: "5px" }}>
-                Nome do Item
+                Nome
               </label>
               <InputText
                 id="nome"
@@ -153,7 +150,7 @@ const Item = () => {
             </div>
             <div className="p-field p-mb-3" style={{ paddingLeft: "5px" }}>
               <label htmlFor="descricao" style={{ marginLeft: "5px" }}>
-                Descrição do Item
+                Descrição
               </label>
               <InputTextarea
                 id="descricao"
@@ -219,6 +216,10 @@ const Item = () => {
               <Dropdown
                 id="fk_categoria"
                 {...register("fk_categoria")}
+                value={valorCategoria}
+                onChange={(e) => {
+                  setValorCategoria(e.value);
+                }}
                 options={categorias}
                 className={errors.fk_categoria ? "p-invalid" : ""}
                 style={{
@@ -240,6 +241,10 @@ const Item = () => {
                 id="fk_estado"
                 {...register("fk_estado")}
                 options={estados}
+                value={valorEstado}
+                onChange={(e) => {
+                  setValorEstado(e.value);
+                }}
                 className={errors.fk_estado ? "p-invalid" : ""}
                 style={{
                   width: "100%",
@@ -296,6 +301,7 @@ const Item = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

@@ -5,17 +5,20 @@ import Cadastro from "./pages/Cadastro";
 import Admin from "./pages/Admin";
 import Item from "./pages/Cadastro_Item/CadastroItem";
 import Mensagem from "./pages/Mensagem/Mensagem";
+import CadastroItem from "./pages/Cadastro_Item/CadastroItem";
+import RecuperarItem from "./pages/Recuperar_Item";
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-
         <Route path="/register" element={<Cadastro />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/item" element={<Item />} />
         <Route path="/mensagem" element={<Mensagem />} />
+        <Route path="/cadastroItem" element={<CadastroItem />} />
+        <Route path="/recuperarItem" element={<RecuperarItem />} />
       </Routes>
     </BrowserRouter>
   );

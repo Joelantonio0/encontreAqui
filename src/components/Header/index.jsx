@@ -14,7 +14,7 @@ const Menu = () => {
       <ul className={styles.navList}>
         <li
           className={styles.navItem}
-          style={{ marginRight: "140px" }}
+          style={{ marginRight: "250px" }}
           onClick={() => handleNavigation("/home")}
         >
           <h1>
@@ -29,34 +29,15 @@ const Menu = () => {
         </li>
         <li
           className={styles.navItem}
-          onClick={() => handleNavigation("/lost-items")}
+          onClick={() => handleNavigation("/recuperarItem")}
         >
-          <i className="pi pi-fw pi-search"></i> Itens Perdidos
+          <i className="pi pi-fw pi-minus-circle"></i> Recuperar Item Perdido
         </li>
         <li
-          className={styles.navItem}
-          onClick={() => handleNavigation("/found-items")}
+          className={`${styles.navItem} ${styles.dropdown}`}
+          onClick={() => handleNavigation("/cadastroItem")}
         >
-          <i className="pi pi-fw pi-check-square"></i> Encontrar Itens
-        </li>
-        <li className={`${styles.navItem} ${styles.dropdown}`}>
-          <i className="pi pi-fw pi-exclamation-circle"></i> Reportar
-          <ul className={styles.dropdownContent}>
-            <li
-              className={styles.dropdownItem}
-              onClick={() => handleNavigation("/report-lost")}
-            >
-              <i className="pi pi-fw pi-minus-circle"></i> Recuperar Item
-              Perdido
-            </li>
-            <li
-              className={styles.dropdownItem}
-              onClick={() => handleNavigation("/report-found")}
-            >
-              <i className="pi pi-fw pi-plus-circle"></i> Reportar Item
-              Encontrado
-            </li>
-          </ul>
+          <i className="pi pi-fw pi-exclamation-circle"></i> Reportar Perda
         </li>
         <li
           className={styles.navItem}

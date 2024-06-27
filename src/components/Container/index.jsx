@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "primereact/button";
 import { Carousel } from "primereact/carousel";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
+import { Calendar } from "primereact/calendar";
 import styles from "./Container.module.css";
 import img1 from "./img/book-1.jpg";
 import img3 from "./img/carkey-1.jpg";
@@ -15,17 +16,35 @@ function Container() {
   const [value, setValue] = useState("");
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
+  const [categorias, setCategorias] = useState([]);
   const handleFiltrar = () => {
     setMostrarFiltros((prev) => !prev);
   };
-  //dados que devem vir da bd
-  const categorias = [
-    { label: "Todos", value: null },
-    { label: "Eletrônicos", value: "eletronicos" },
-    { label: "Acessórios", value: "acessorios" },
-    { label: "Documentos", value: "documentos" },
-    { label: "Roupas", value: "roupas" },
-  ];
+  useEffect(() => {
+    fetch("http://localhost:5000/listar_categorias")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao buscar a lista de categorias");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data.dados);
+        if (Array.isArray(data.dados) && data.dados.length > 0) {
+          let teste = data.dados;
+          const nomesCategorias = teste.map((teste) => teste.nome);
+          setCategorias(nomesCategorias);
+        } else {
+          console.error(
+            "Os dados recebidos são um array vazio ou não é um array:",
+            data.dados
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar a lista de categorias:", error);
+      });
+  }, []);
   //dados que devem vir da bd
   const products = [
     {
@@ -156,35 +175,7 @@ function Container() {
           />
           <Button icon="pi pi-search" />
         </div>
-        <Button
-          label="Filtrar"
-          style={{ padding: "8px" }}
-          onClick={handleFiltrar}
-        />
-        {mostrarFiltros && (
-          <div className={styles.filters}>
-            <div className="p-field">
-              <label htmlFor="category">Categoria</label>
-              <Dropdown
-                id="category"
-                value={categoriaSelecionada}
-                options={categorias}
-                onChange={(e) => setCategoriaSelecionada(e.value)}
-                placeholder="Selecione uma categoria"
-                style={{ width: "100%" }}
-              />
-            </div>
-            <div className="p-field">
-              <label htmlFor="filter2">Filtro 2</label>
-              <InputText id="filter2" style={{ width: "100%" }} />
-            </div>
-            <div className="p-field">
-              <label htmlFor="filter3">Filtro 3</label>
-              <InputText id="filter3" style={{ width: "100%" }} />
-            </div>
-          </div>
-        )}
-        <h1 style={{ color: "#111827" }}>Itens perdidos</h1>
+        <h1 style={{ color: "#111827" }}>Itens Recuperados</h1>
         <div className={styles.itens}>
           {products.map((product) => (
             <div

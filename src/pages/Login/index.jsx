@@ -40,10 +40,11 @@ const Login = () => {
       contentType: "application/json",
       data: JSON.stringify(data),
       success: (response) => {
-        console.log(data);
-        localStorage.setItem("sessionData", JSON.stringify(data));
+        console.log(response);
+        localStorage.setItem("sessionData", JSON.stringify(response));
         show("Usuário Logado com sucesso", "success");
-        window.location.href = "/home";
+        if (response.dados.fk_nivel == 1) window.location.href = "/admin";
+        else window.location.href = "/home";
       },
       error: (xhr, status, error) => {
         console.log(data);
