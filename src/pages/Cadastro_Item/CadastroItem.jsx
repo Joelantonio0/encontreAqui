@@ -73,6 +73,31 @@ const Item = () => {
       .catch((error) => {
         console.error("Erro ao buscar a lista de categorias:", error);
       });
+    fetch("http://localhost:5000/listar_estados_itens")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao buscar a lista de estados");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data.dados);
+        if (Array.isArray(data.dados) && data.dados.length > 0) {
+          const estadoss = data.dados.map((estados) => ({
+            label: estados.descricao,
+            value: estados.pk_estado,
+          }));
+          setEstados(estadoss);
+        } else {
+          console.error(
+            "Os dados recebidos são um array vazio ou não é um array:",
+            data.dados
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar a lista de categorias:", error);
+      });
   }, []);
 
   const onSubmit = async (data) => {

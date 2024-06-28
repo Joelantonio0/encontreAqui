@@ -1,0 +1,6 @@
+.container_recuperar_item {
+  display: flex;
+  padding: 40px;
+  align-items: center;
+  flex-direction: column;
+}

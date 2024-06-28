@@ -7,6 +7,7 @@ import Item from "./pages/Cadastro_Item/CadastroItem";
 import Mensagem from "./pages/Mensagem/Mensagem";
 import CadastroItem from "./pages/Cadastro_Item/CadastroItem";
 import RecuperarItem from "./pages/Recuperar_Item";
+import Perfil from "./pages/Perfil";
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -19,6 +20,7 @@ function AppRoutes() {
         <Route path="/mensagem" element={<Mensagem />} />
         <Route path="/cadastroItem" element={<CadastroItem />} />
         <Route path="/recuperarItem" element={<RecuperarItem />} />
+        <Route path="/perfil" element={<Perfil />} />
       </Routes>
     </BrowserRouter>
   );

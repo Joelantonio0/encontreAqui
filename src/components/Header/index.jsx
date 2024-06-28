@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 
 const Menu = () => {
   const navigate = useNavigate();
-
+  const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+  const [nivelAcesso, setNivelAcesso] = useState();
+  useEffect(() => {
+    console.log("Dados da sessão:", sessionData.dados.fk_nivel);
+    setNivelAcesso(sessionData.dados.fk_nivel);
+  });
   const handleNavigation = (path) => {
     navigate(path);
   };
@@ -41,11 +46,20 @@ const Menu = () => {
         </li>
         <li
           className={styles.navItem}
-          onClick={() => handleNavigation("/admin")}
+          onClick={() => {
+            if (nivelAcesso == 1) handleNavigation("/admin");
+            else handleNavigation("/perfil");
+          }}
         >
           <i className="pi pi-fw pi-user"></i> Perfil
         </li>
-        <li className={styles.navItem} onClick={() => handleNavigation("/")}>
+        <li
+          className={styles.navItem}
+          onClick={() => {
+            localStorage.removeItem("sessionData");
+            handleNavigation("/");
+          }}
+        >
           <i className="pi pi-fw pi-power-off"></i> Sair
         </li>
       </ul>
