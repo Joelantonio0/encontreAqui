@@ -8,6 +8,7 @@ import GestaoItens from "../../components/AdminComponents/GestaoItens";
 import GestaoUsuarios from "../../components/AdminComponents/GestaoUsuarios";
 import Relatorios from "../../components/AdminComponents/Relatorios";
 import Categorias from "../../components/AdminComponents/Categorias";
+import Locais from "../../components/AdminComponents/Locais";
 function Admin() {
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("dashboard");
@@ -55,6 +56,12 @@ function Admin() {
         return (
           <>
             <Relatorios />
+          </>
+        );
+      case "locais":
+        return (
+          <>
+            <Locais />
           </>
         );
       case "profile":
@@ -124,6 +131,12 @@ function Admin() {
               </li>
               <li
                 className={`${styles.navItem} ${styles.dropdown}`}
+                onClick={() => handleNavigation("locais")}
+              >
+                <i className="pi pi-fw pi-map-marker"></i> Gestão de Locais
+              </li>
+              <li
+                className={`${styles.navItem} ${styles.dropdown}`}
                 onClick={() => handleNavigation("relatorios")}
               >
                 <i className="pi pi-fw pi-exclamation-circle"></i> Relatórios
@@ -137,7 +150,9 @@ function Admin() {
             </ul>
           </nav>
         </div>
-        <div className={styles.rightSide}>{renderContent()}</div>
+        <div className={styles.rightSide} style={{ height: "auto" }}>
+          {renderContent()}
+        </div>
       </div>
       <Footer />
     </div>

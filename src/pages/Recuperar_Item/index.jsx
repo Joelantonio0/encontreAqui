@@ -95,6 +95,7 @@ function RecuperarItem() {
         console.log(data.dados);
         setItens(data.dados);
         setVisible(data.dados.length > 0);
+        if (data.dados.length == 0) setItensEncontrados([]);
       })
       .catch((error) => {
         console.error("Erro ao buscar itens por categorias:", error);
@@ -256,13 +257,23 @@ function RecuperarItem() {
               </>
             )}
             {Array.isArray(itensEncontrados) && itensEncontrados.length > 0 ? (
-              <div className="card xl:flex xl:justify-content-center">
-                <DataView
-                  value={itensEncontrados}
-                  itemTemplate={itemTemplate}
-                  layout="list"
+              <>
+                <div className="card xl:flex xl:justify-content-center">
+                  <DataView
+                    value={itensEncontrados}
+                    itemTemplate={itemTemplate}
+                    layout="list"
+                  />
+                </div>
+                <Button
+                  label="Reinvindicar"
+                  style={{
+                    padding: "10px",
+                    color: "white",
+                    fontWeight: "500",
+                  }}
                 />
-              </div>
+              </>
             ) : (
               visible && (
                 <div>

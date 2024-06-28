@@ -10,8 +10,9 @@ import "primeflex/primeflex.css";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import svgFile from "./login.svg";
 import $ from "jquery";
-
+import styles from "./Login.module.css";
 const schema = yup.object().shape({
   email: yup.string().email("Email inválido").required("Email é obrigatório"),
   senha: yup.string().required("Senha é obrigatória"),
@@ -42,9 +43,17 @@ const Login = () => {
       success: (response) => {
         console.log(response);
         localStorage.setItem("sessionData", JSON.stringify(response));
-        show("Usuário Logado com sucesso", "success");
-        if (response.dados.fk_nivel == 1) window.location.href = "/admin";
-        else window.location.href = "/home";
+
+        if (response.dados.fk_nivel == 1 && response.dados != []) {
+          show("Usuário Logado com sucesso", "success");
+          window.location.href = "/admin";
+        } else if (response.dados.fk_nivel == 2 && response.dados != []) {
+          show("Usuário Logado com sucesso", "success");
+          window.location.href = "/home";
+        } else {
+          show("Login falhou", "error");
+          window.location.href = "/";
+        }
       },
       error: (xhr, status, error) => {
         console.log(data);
@@ -66,84 +75,135 @@ const Login = () => {
     <>
       <Toast ref={toast} />
       <div
-        className="p-d-flex p-jc-center p-ai-center p-mt-6"
-        style={{
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "#f4f4f4",
-        }}
+        className="container-login"
+        style={{ display: "flex", flexDirection: "row" }}
       >
         <div
-          className="p-card p-p-4 p-shadow-5"
+          className="direita"
           style={{
-            width: "100%",
-            maxWidth: "500px",
-            background: "white",
-            borderRadius: "10px",
+            width: "60%",
+            height: "100vh",
+            backgroundImage: `url(${svgFile})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+          }}
+        ></div>
+        <div
+          className="esquerda"
+          style={{
+            width: "40%",
+            height: "100vh",
+            padding: "50px 20px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "80px",
           }}
         >
-          <h2 className="p-text-center" style={{ textAlign: "center" }}>
-            Login
-          </h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="p-fluid">
-            <div className="p-field p-mb-3" style={{ paddingLeft: "5px" }}>
-              <label htmlFor="email" style={{ marginLeft: "5px" }}>
-                Email
-              </label>
-              <InputText
-                id="email"
-                {...register("email")}
-                className={errors.email ? "p-invalid" : ""}
-                style={{
-                  width: "100%",
-                  borderRadius: "5px",
-                  border: "1px solid #ced4da",
-                  boxShadow: "none",
-                }}
-              />
-              {errors.email && (
-                <small className="p-error">{errors.email.message}</small>
-              )}
-            </div>
-            <div className="p-field p-mb-3" style={{ paddingLeft: "5px" }}>
-              <label htmlFor="senha" style={{ marginLeft: "5px" }}>
-                Senha
-              </label>
-              <Password
-                id="senha"
-                {...register("senha")}
-                onChange={handleSenhaChange}
-                feedback={false}
-                className={errors.senha ? "p-invalid" : ""}
-                inputStyle={{
-                  width: "100%",
-                  borderRadius: "5px",
-                  border: "1px solid #ced4da",
-                  boxShadow: "none",
-                }}
-              />
-              {errors.senha && (
-                <small className="p-error">{errors.senha.message}</small>
-              )}
-            </div>
-            <div
-              className="p-d-flex p-jc-center"
-              style={{
-                marginBottom: "1rem",
-                textAlign: "center",
-                marginTop: "15px",
-              }}
+          <div className={styles.logo}>
+            <h1 style={{ fontSize: "1.8rem" }}>
+              encontre<span style={{ color: "var(--secondary)" }}>Aqui</span>
+            </h1>
+                      
+          </div>
+
+          <div
+            className=""
+            style={{
+              width: "70%",
+              maxWidth: "500px",
+              background: "white",
+              borderRadius: "10px",
+            }}
+          >
+            <h2
+              className=""
+              style={{ textAlign: "center", color: "var(--primary)" }}
             >
-              <Button
-                type="submit"
-                label="Login"
-                className="p-button-rounded p-button-primary"
-                style={{ width: "100px" }}
-              />
-            </div>
-          </form>
+              Login
+            </h2>
+            <form onSubmit={handleSubmit(onSubmit)} className="p-fluid">
+              <div
+                className=""
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  marginBottom: "20px",
+                }}
+              >
+                <label htmlFor="email" style={{}}>
+                  Email
+                </label>
+                <InputText
+                  id="email"
+                  {...register("email")}
+                  className={errors.email ? "p-invalid" : ""}
+                  style={{
+                    width: "100%",
+                    borderRadius: "5px",
+                    border: "1px solid #ced4da",
+                    boxShadow: "none",
+                    padding: "7px",
+                  }}
+                />
+                {errors.email && (
+                  <small className="p-error">{errors.email.message}</small>
+                )}
+              </div>
+              <div
+                className=""
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+              >
+                <label htmlFor="senha" style={{}}>
+                  Senha
+                </label>
+                <InputText
+                  type="password"
+                  id="senha"
+                  {...register("senha")}
+                  onChange={handleSenhaChange}
+                  feedback={false}
+                  className={errors.senha ? "p-invalid" : ""}
+                  style={{
+                    width: "100%",
+                    borderRadius: "5px",
+                    border: "1px solid #ced4da",
+                    boxShadow: "none",
+                    padding: "7px",
+                    outline: "none",
+                  }}
+                />
+                {errors.senha && (
+                  <small className="p-error">{errors.senha.message}</small>
+                )}
+              </div>
+              <div
+                className=""
+                style={{
+                  marginBottom: "1rem",
+                  textAlign: "center",
+                  marginTop: "15px",
+                }}
+              >
+                <Button
+                  type="submit"
+                  label="Login"
+                  className=""
+                  style={{
+                    width: "100px",
+                    padding: "10px",
+                    borderRadius: "10px",
+                    fontWeight: "500",
+                  }}
+                />
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </>

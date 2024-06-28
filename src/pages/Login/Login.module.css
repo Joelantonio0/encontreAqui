@@ -37,3 +37,14 @@
   background-color: antiquewhite;
   color: black;
 }
+.logo h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: var(--primary);
+  font-family: Lobster;
+}
+
+.logo span {
+  color: var(--secondary);
+  color: rgb(22,  22,  68);
+}
