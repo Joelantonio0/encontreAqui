@@ -106,7 +106,7 @@ function GestaoUsuarios() {
                   }}
                 />
               )}
-              header="Desabilitar"
+              header="Remover"
               align="center"
               headerStyle={{
                 backgroundColor: "var(--primary)",

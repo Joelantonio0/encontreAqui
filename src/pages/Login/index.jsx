@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { InputText } from "primereact/inputtext";
-import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import "primeflex/primeflex.css";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import { useNavigate } from "react-router-dom";
 import svgFile from "./login.svg";
 import $ from "jquery";
 import styles from "./Login.module.css";
@@ -19,6 +19,7 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
+  const navigate = useNavigate();
   const toast = useRef(null);
 
   const {
@@ -33,7 +34,9 @@ const Login = () => {
   const show = (mensagem, estado) => {
     toast.current.show({ severity: estado, detail: mensagem, life: 3000 });
   };
-
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
   const onSubmit = (data) => {
     $.ajax({
       url: "http://localhost:5000/login",
@@ -203,6 +206,17 @@ const Login = () => {
                 />
               </div>
             </form>
+            <Button
+              label="Cadastro"
+              style={{
+                border: "none",
+                backgroundColor: "white",
+                color: "var(--primary)",
+              }}
+              onClick={() => {
+                handleNavigation("/register");
+              }}
+            />
           </div>
         </div>
       </div>

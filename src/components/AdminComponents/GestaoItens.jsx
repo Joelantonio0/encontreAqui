@@ -419,7 +419,6 @@ const GestaoItens = () => {
             ></Column>
           </DataTable>
         </div>
-        <Item toast={toast} />
       </div>
     </>
   );
